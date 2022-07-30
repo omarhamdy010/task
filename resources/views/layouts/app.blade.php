@@ -18,6 +18,11 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
 </head>
 <body>
     <div id="app">
@@ -58,12 +63,25 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('transaction') }}">
+                                        {{ __('transaction') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('create.transaction') }}">
+                                        {{ __('create_transaction') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('user.edit') }}">
+                                        {{ __('update_profile') }}
+                                    </a>
+                                    @if(auth()->user()->is_admin == 1)
+                                        <a class="dropdown-item" href="{{ route('getAll') }}">
+                                        {{ __('all transaction') }}
+                                    </a>
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                    onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
@@ -79,5 +97,46 @@
             @yield('content')
         </main>
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            var table = $('.data-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('transaction') }}",
+                columns: [
+                    {data: 'id', name: 'id'},
+                    {data: 'amount', name: 'amount'},
+                    {data: 'from', name: 'from'},
+                    {data: 'user_id', name: 'user_id'},
+                    {data: 'created_at', name: 'created_at' }
+                ]
+            });
+
+        });
+
+        $(function () {
+
+            var table = $('.data-table01').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('getAll') }}",
+                columns: [
+                    {data: 'id', name: 'id'},
+                    {data: 'amount', name: 'amount'},
+                    {data: 'from', name: 'from'},
+                    {data: 'user_id', name: 'user_id'},
+                    {data: 'created_at', name: 'created_at' }
+                ]
+            });
+
+        });
+    </script>
 </body>
 </html>
