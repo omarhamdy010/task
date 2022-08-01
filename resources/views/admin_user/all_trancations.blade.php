@@ -8,7 +8,9 @@
                     <div class="card-header">{{ __('Transaction') }}</div>
 
                     <div class="card-body">
-                        <table class="table table-bordered data-table01">
+                        <table class="table table-bordered
+{{--                        data-table01--}}
+">
                             <thead>
                             <tr>
                                 <th>No</th>
@@ -19,8 +21,18 @@
                             </tr>
                             </thead>
                             <tbody>
+@foreach($transactions as $transaction )
+                            <tr>
+                                <td>{{$transaction->id}}</td>
+                                <td>{{$transaction->amount}}</td>
+                                <td>{{$transaction->form}}</td>
+                                <td>{{$transaction->to}}</td>
+                                <td>{{$transaction->created_at}}</td>
+                            </tr>
+    @endforeach
                             </tbody>
                         </table>
+                        {{$transactions->links()}}
                     </div>
                 </div>
             </div>
