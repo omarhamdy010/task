@@ -25,8 +25,8 @@
                             <tr>
                                 <td>{{$transaction->id}}</td>
                                 <td>{{$transaction->amount}}</td>
-                                <td>{{$transaction->form}}</td>
-                                <td>{{$transaction->to}}</td>
+                                <td>{{$transaction->from}}</td>
+                                <td>{{$transaction->user_id}}</td>
                                 <td>{{$transaction->created_at}}</td>
                             </tr>
     @endforeach
