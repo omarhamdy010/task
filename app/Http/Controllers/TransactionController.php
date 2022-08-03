@@ -118,7 +118,7 @@ class TransactionController extends Controller
                 ->rawColumns(['user_id', 'form', 'created_at'])
                 ->make(true);
         }
-        $transactions = Transaction::paginate(10);
+        $transactions = Transaction::simplePaginate(10);
         return view('admin_user.all_trancations',compact('transactions'));
     }
 }
