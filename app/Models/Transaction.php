@@ -11,10 +11,12 @@ class Transaction extends Model
 
     protected $guarded = [];
 
-    public function users()
-    {
-        return $this->belongsTo(User::class);
+    public function from(){
+        return $this->belongsTo(User::class, 'from', 'id');
     }
 
+    public function user_id(){
+        return $this->belongsTo(User::class, 'to', 'id');
+    }
 
 }

@@ -38,7 +38,7 @@ class TransactionController extends Controller
     public function getAll(Request $request)
     {
         if ($request->ajax()) {
-            $data = Transaction::where('user_id', auth()->id())->orWhere('from', auth()->id())->with(['users']);
+            $data = Transaction::where('user_id', auth()->id())->orWhere('from', auth()->id())->with(['user_id','from']);
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->editColumn('from', function ($user) {

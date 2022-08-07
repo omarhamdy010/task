@@ -16,9 +16,11 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->float('amount');
-            $table->integer('from');
+            $table->unsignedBigInteger('from');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
+
+            $table->foreign('from')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
