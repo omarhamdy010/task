@@ -22,16 +22,16 @@ class DatabaseSeeder extends Seeder
             'balance' => 1000
         ]);
 
-
         $user = User::select('id')->get();
 
         for ($i = 0; $i <= 100; $i++) {
+
             $data = [];
 
             for ($y = 0; $y <= 5000; $y++) {
 
-
                 $data[] = [
+
                     'amount' => random_int(1, 200),
                     'from' => $user->random()->id,
                     'user_id' => $user->random()->id,

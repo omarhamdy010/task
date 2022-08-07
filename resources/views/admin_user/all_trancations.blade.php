@@ -8,9 +8,7 @@
                     <div class="card-header">{{ __('Transaction') }}</div>
 
                     <div class="card-body">
-                        <table class="table table-bordered
-{{--                        data-table01--}}
-">
+                        <table class="table table-bordered data-table01" >
                             <thead>
                             <tr>
                                 <th>No</th>
@@ -21,22 +19,26 @@
                             </tr>
                             </thead>
                             <tbody>
-@foreach($transactions as $transaction )
-                            <tr>
-                                <?php
-                                 $user= \App\Models\User::where('id',$transaction->user_id)->first();
-                                $from =\App\Models\User::where('id',$transaction->from)->first()
-                                ?>
-                                <td>{{$transaction->id}}</td>
-                                <td>{{$transaction->amount}}</td>
-                                <td>{{$from->name}}</td>
-                                <td>{{$user->name}}</td>
-                                <td>{{$transaction->created_at}}</td>
-                            </tr>
-    @endforeach
+
+{{--@foreach($transactions as $transaction )--}}
+{{--                            <tr>--}}
+{{--                                <?php--}}
+{{--                                 $user= \App\Models\User::where('id',$transaction->user_id)->first();--}}
+{{--                                $from =\App\Models\User::where('id',$transaction->from)->first()--}}
+{{--                                ?>--}}
+{{--                                <td>{{$transaction->id}}</td>--}}
+{{--                                <td>{{$transaction->amount}}</td>--}}
+{{--                                <td>{{$from->name}}</td>--}}
+{{--                                <td>{{$user->name}}</td>--}}
+{{--                                <td>{{$transaction->created_at}}</td>--}}
+{{--                            </tr>--}}
+{{--    @endforeach--}}
+
                             </tbody>
                         </table>
-                        {!! $transactions->links() !!}
+
+{{--                        {!! $transactions->links() !!}--}}
+
                     </div>
                 </div>
             </div>

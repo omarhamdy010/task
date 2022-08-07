@@ -14,7 +14,31 @@ class TransactionController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Transaction::where('from', auth()->id())->get();
+            $data = Transaction::Where('from', auth()->id());
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->editColumn('from', function ($user) {
+                    $from = $user->from;
+                    $name = User::find($from);
+                    return $name->name;
+                })
+                ->editColumn('user_id', function ($user) {
+                    $name = User::find($user->user_id);
+                    return $name->name;
+                })
+                ->editColumn('created_at', function ($user) {
+                    return Carbon::now()->format('Y-m-d H:i:s A');
+                })
+                ->rawColumns(['user_id', 'form', 'created_at'])
+                ->make(true);
+        }
+        return view('admin_user.all_trancation');
+    }
+
+    public function getAll(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Transaction::where('user_id', auth()->id())->orWhere('from', auth()->id())->with(['users']);
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->editColumn('from', function ($user) {
@@ -34,8 +58,7 @@ class TransactionController extends Controller
                 ->rawColumns(['user_id', 'form', 'created_at'])
                 ->make(true);
         }
-
-        return view('admin_user.all_trancation');
+        return view('admin_user.all_trancations');
     }
 
     public function create()
@@ -95,30 +118,4 @@ class TransactionController extends Controller
         return redirect()->back();
     }
 
-    public function getAll(Request $request)
-    {
-        if ($request->ajax()) {
-            $data = Transaction::all();
-            return DataTables::of($data)
-                ->addIndexColumn()
-                ->editColumn('from', function ($user) {
-                    $from = $user->from;
-                    $name = User::find($from);
-
-                    return $name->name;
-                })
-                ->editColumn('user_id', function ($user) {
-                    $name = User::find($user->user_id);
-                    return $name->name;
-                })
-                ->editColumn('created_at', function ($user) {
-
-                    return Carbon::now()->format('Y-m-d H:i:s A');
-                })
-                ->rawColumns(['user_id', 'form', 'created_at'])
-                ->make(true);
-        }
-        $transactions = Transaction::simplePaginate(10);
-        return view('admin_user.all_trancations',compact('transactions'));
-    }
 }
